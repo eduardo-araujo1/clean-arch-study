@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface UserGateway {
     User createUser(User user);
-    Optional<User> findByCpfCnpj(String cpfOrCnpj);
+    Optional<User> findByCpf(String cpf);
     List<User> findAll();
 }

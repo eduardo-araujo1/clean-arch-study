@@ -1,10 +1,9 @@
 package com.eduardo.clean_arch_study.core.usecases.impl;
 
 import com.eduardo.clean_arch_study.core.entities.User;
+import com.eduardo.clean_arch_study.core.exceptions.BusinessException;
 import com.eduardo.clean_arch_study.core.gateways.UserGateway;
 import com.eduardo.clean_arch_study.core.usecases.CreateUserUseCase;
-
-import java.util.Optional;
 
 public class CreateUserUseCaseImpl implements CreateUserUseCase {
 
@@ -15,10 +14,10 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
     }
 
     @Override
-    public User create(User user) {
-        userGateway.findByCpfCnpj(user.cpfOrCnpj())
+    public User execute(User user) {
+        userGateway.findByCpf(user.cpf())
                 .ifPresent(existingUser -> {
-                    throw new RuntimeException("O CPF/CNPJ " + user.cpfOrCnpj() + " já está cadastrado no sistema");
+                    throw new BusinessException("O CPF: " + user.cpf() + " já está cadastrado no sistema");
                 });
         return userGateway.createUser(user);
     }
